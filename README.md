@@ -17,5 +17,30 @@ $ npm i
 * refresh-token.public.key
 
 
+## 서버 실행 관련 스크립트
+1. 개발 모드 실행
+
+```shell
+$ npm run dev
+```
+
+2. 배포 모드 실행
+
+```shell
+$ npm start
+```
+
+3. 배포 모드 중지
+
+```shell
+$ npm run stop
+```
+
+4. 배포 모드 재실행
+
+```shell
+$ npm run restart
+```
+
 ## API 테스트
 * documents/api.rest 파일 참고

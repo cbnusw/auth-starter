@@ -34,6 +34,7 @@ schema.virtual('profile')
     return {
       _id: this._id,
       role: this.role,
+      info: this.info
     }
   });
 

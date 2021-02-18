@@ -1,7 +1,7 @@
 const { verifyAccessToken } = require('../utils/jwt');
 const { FORBIDDEN, LOGIN_REQUIRED } = require('../errors');
 
-const isAuthenticated = async (req, res, next) => {
+const requireAuthentication = async (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (token) {
     try {
@@ -15,10 +15,10 @@ const isAuthenticated = async (req, res, next) => {
   next();
 };
 
-const hasRoles = (...roles) => [
-  isAuthenticated,
+const requireRoles = (...roles) => [
+  requireAuthentication,
   (req, res, next) => roles.includes(req.user.role) ? next() : next(FORBIDDEN)
 ];
 
-exports.isAuthenticated = isAuthenticated;
-exports.hasRoles = hasRoles;
+exports.requireAuthentication = requireAuthentication;
+exports.requireRoles = requireRoles;
