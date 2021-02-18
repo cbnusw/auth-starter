@@ -79,8 +79,7 @@ const logout = async (req, res, next) => {
 
 const join = (...roles) => async (req, res, next) => {
   const { email, password, role = 'member', info } = req.body;
-  console.log(req.body);
-  console.log(role);
+  const { phone } = info;
 
   if (!email) return next(EMAIL_REQUIRED);
   if (!password) return next(PASSWORD_REQUIRED);
@@ -90,7 +89,11 @@ const join = (...roles) => async (req, res, next) => {
     const exUser = await User.findByEmail(email);
     if (exUser) return next(EMAIL_USED);
 
+    const exUserInfo = await UserInfo.findOne({ phone });
+    if (exUserInfo) return next(PHONE_NUMBER_USED);
+
     const user = await User.create({ email, password, role });
+
     if (info) {
       info.email = email;
       const { _id: infoId } = await UserInfo.create({ ...info, user: user._id });
